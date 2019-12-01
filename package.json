@@ -1,0 +1,14 @@
+{
+  "name": "advent2019",
+  "version": "1.0.0",
+  "description": "tinc2k's half-assed attempt at 2019 Advent of Code",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tinc2k",
+  "license": "Unlicense",
+  "dependencies": {
+    "moment": "^2.22.2"
+  }
+}
