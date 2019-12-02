@@ -2,7 +2,8 @@
 
 const fs = require('fs');
 
-const WANTED_OUTPUT = 19690720;
+const WANTED = 19690720;
+
 let initial = fs.readFileSync('02input.txt', 'utf8').split(',').map(i => parseInt(i));
 
 for (let i = 0; i < 99; i++) {
@@ -12,7 +13,7 @@ for (let i = 0; i < 99; i++) {
     memory[1] = i;
     memory[2] = j;
     let result = run(memory);
-    if (result[0] === WANTED_OUTPUT) {
+    if (result[0] === WANTED) {
       console.log({ noun: i, verb: j, output: 100 * i + j });
     }
   }
