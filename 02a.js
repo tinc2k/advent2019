@@ -28,11 +28,11 @@ do {
     address += 4;
   }
   else if (intcodes[address] === 99) {
-    console.log('halt detected.');
-    console.log('spitting out current memory...', intcodes.toString());
+    //console.log('Halt detected.');
+    console.log(intcodes.toString());
     running = false;
   }
   else {
-    console.error('unknown opcode; something went wrong.', { address });
+    console.error('Unknown opcode; something went wrong.', { address });
   }
 } while (running);
