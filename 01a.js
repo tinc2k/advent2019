@@ -1,8 +1,10 @@
+'use strict';
+
 const fs = require('fs');
 
 let masses = fs.readFileSync('01input.txt', 'utf8').split('\n');
 
-fuel = 0;
+let fuel = 0;
 for (let mass of masses) {
   fuel += getFuel(mass);
 }

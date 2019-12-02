@@ -15,7 +15,7 @@ function getTotalFuel(total, leftover) {
   } else {
     total += fuel;
     leftover = fuel;
-    return getTotalFuel(total, leftover);
+    return getTotalFuel(total, fuel);
   }
 }
 
