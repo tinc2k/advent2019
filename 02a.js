@@ -1,3 +1,5 @@
+'use strict';
+
 // https://adventofcode.com/2019/day/2
 
 const fs = require('fs');
@@ -10,7 +12,6 @@ intcodes[2] = 2;
 
 let address = 0;
 let running = true;
-
 do {
   //console.log(`currentAddress is ${address}`);
   if (intcodes[address] === 1) {

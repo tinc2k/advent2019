@@ -1,5 +1,7 @@
 'use strict';
 
+// https://adventofcode.com/2019/day/1
+
 const fs = require('fs');
 
 let masses = fs.readFileSync('01input.txt', 'utf8').split('\n');
