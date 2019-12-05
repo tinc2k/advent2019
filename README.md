@@ -21,7 +21,7 @@ Once again, I've decided to semi-seriously take part in this year's [Advent of C
 
 ## Day 4: [Secure Container](https://adventofcode.com/2019/day/4)
 
-- 
+- [what  did we learn today?](https://www.youtube.com/watch?v=J6VjPM5CeWs)
 
 ## Day 5: [Sunny with a Chance of Asteroids](https://adventofcode.com/2019/day/5)
 
