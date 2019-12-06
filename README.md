@@ -28,7 +28,7 @@ Once again, I've decided to semi-seriously take part in this year's [Advent of C
 - reading and concentrating on the task was the hardest part, the implementation itself is quite trivial
 - TODO tidy up
 
-## Day 6: Universal Orbit Map
+## Day 6: [Universal Orbit Map](https://adventofcode.com/2019/day/6)
 
 - had to Google for part 2, decided on a pretty limited data structure for part 1 and didn't know how to quickly dig myself out of that
 - figured finding common ancestor would be the way to go, if we're already traversing each object's path backward towards root, might as well return the paths & compare
