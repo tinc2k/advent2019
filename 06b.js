@@ -6,6 +6,8 @@ const fs = require('fs');
 
 let input = fs.readFileSync('06input.txt', 'utf8').split('\n');
 
+let start = (new Date).getTime();
+
 let data = {};
 data['COM'] = { parent: null };
 
@@ -23,7 +25,6 @@ for (let object in data) {
 }
 console.log(total);
 
-let start = (new Date).getTime();
 let ancestry1 = getAncestry(data, 'YOU');
 let ancestry2 = getAncestry(data, 'SAN');
 let commonAncestor = findCommonAncestor(ancestry1, ancestry2);
