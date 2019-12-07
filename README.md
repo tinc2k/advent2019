@@ -33,3 +33,10 @@ Once again, I've decided to semi-seriously take part in this year's [Advent of C
 - had to Google for part 2, decided on a pretty limited data structure for part 1 and didn't know how to quickly dig myself out of that
 - figured finding common ancestor would be the way to go, if we're already traversing each object's path backward towards root, might as well return the paths & compare
 - TODO do a couple more Tree, Graph, shortest-path, Dijkstra problems to remember / learn more
+
+## Day 7: [Amplification Circuit](https://adventofcode.com/2019/day/7)
+
+- figured I needed permutations, googled [this blogpost](https://medium.com/@lindagmorales94/how-to-solve-a-string-permutation-problem-using-javascript-95ad5c388219) for a quick JavaScript solution
+- part 2 was much more difficult, because we need to keep track of memory & instruction pointer and crucially, leave the 'amplifier' waiting for next input
+- decided I wanted to try a more object-oriented approach to defining an `Amplifier` with it's internal data & methods, end result currently looks a bit like [FizzBuzz Enterprise Edition](https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition)
+- TODO rewrite/grok permutation method

@@ -5,27 +5,22 @@
 const fs = require('fs');
 
 let intcodes = fs.readFileSync('07input.txt', 'utf8').split(',').map(i => parseInt(i));
-// let intcodes = fs.readFileSync('07debug.txt', 'utf8').split(',').map(i => parseInt(i));
+let possiblePhaseSettings = getPermutations('01234');
 
-let gainStringy = '01234';
-let gains = getPermutations(gainStringy);
-
-console.log(gains);
-
-let max = 0;
-let maxPhase = null;
-for (let gain of gains) {
-  let outputA = run(intcodes.concat([]), [parseInt(gain[0]), 0]);
-  let outputB = run(intcodes.concat([]), [parseInt(gain[1]), outputA]);
-  let outputC = run(intcodes.concat([]), [parseInt(gain[2]), outputB]);
-  let outputD = run(intcodes.concat([]), [parseInt(gain[3]), outputC]);
-  let outputE = run(intcodes.concat([]), [parseInt(gain[4]), outputD]);
-  if (outputE > max) {
-    max = outputE;
-    maxPhase = gain;
+let maxValue = 0;
+let maxPhaseSetting = null;
+for (let phaseSetting of possiblePhaseSettings) {
+  let outputA = run(intcodes.concat([]), [parseInt(phaseSetting[0]), 0]);
+  let outputB = run(intcodes.concat([]), [parseInt(phaseSetting[1]), outputA]);
+  let outputC = run(intcodes.concat([]), [parseInt(phaseSetting[2]), outputB]);
+  let outputD = run(intcodes.concat([]), [parseInt(phaseSetting[3]), outputC]);
+  let outputE = run(intcodes.concat([]), [parseInt(phaseSetting[4]), outputD]);
+  if (outputE > maxValue) {
+    maxValue = outputE;
+    maxPhaseSetting = phaseSetting;
   }
 }
-console.log(`max output waz ${max} from phase ${maxPhase}`);
+console.log({maxValue, maxPhaseSetting});
 
 // https://medium.com/@lindagmorales94/how-to-solve-a-string-permutation-problem-using-javascript-95ad5c388219
 // https://stackoverflow.com/questions/9960908/permutations-in-javascript
@@ -87,7 +82,7 @@ function run(memory, inputs) {
       // output
       let param1 = mode1 ? memory[counter + 1] : memory[memory[counter + 1]];
       output = param1;
-      console.log(output);
+      //console.log(output);
       //if (mode1) console.log('we have output in mode1, sneaky', { opcode, mode1, address1 });
       counter += 2;
     }
