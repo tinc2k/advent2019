@@ -5,20 +5,14 @@
 const fs = require('fs');
 
 let image = fs.readFileSync('08input.txt', 'utf8').split('');
-// let image = fs.readFileSync('08debug.txt', 'utf8').split('');
 
-
-// let WIDTH = 3;
-// let HEIGHT = 2;
-
-let WIDTH = 25;
-let HEIGHT = 6;
-
-let BLOCK_SIZE = WIDTH * HEIGHT;
+const WIDTH = 25;
+const HEIGHT = 6;
+const BLOCK_SIZE = WIDTH * HEIGHT;
 
 let blocks = [];
 
-for (let index = 0; index < image.length; index+= BLOCK_SIZE) {
+for (let index = 0; index < image.length; index += BLOCK_SIZE) {
   let block = {
     digits: [],
     zeros: 0,
@@ -31,9 +25,7 @@ for (let index = 0; index < image.length; index+= BLOCK_SIZE) {
     if (parsed === 0) block.zeros++;
     else if (parsed === 1) block.ones++;
     else if (parsed === 2) block.twos++;
-    // console.log(i);
   }
-  // console.log("\n");
   blocks.push(block);
 }
 
@@ -44,5 +36,4 @@ for (let block of blocks) {
   }
 }
 
-// console.log(blockWithFewestZeros);
 console.log(blockWithFewestZeros.ones * blockWithFewestZeros.twos);
