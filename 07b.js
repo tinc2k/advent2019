@@ -8,111 +8,100 @@ class Amplifier {
   constructor(initialMemory) {
     this.memory = initialMemory.concat([]);
     this.isHalted = false;
-    this.isAwaitingInput = false;
-    this.instructionPointer = 0;
+    // this.isAwaitingInput = false;
+    this.pointer = 0;
   }
   run(input) {
     let running = true;
     let inputUsed = false;
     let output = null;
     if (this.isHalted) {
-      console.log(`i am halted; cannot process input ${input}.`)
+      console.log(`halted; cannot process input ${input}.`)
       return output;
     }
     do {
-      let { opcode, mode1, mode2, mode3 } = this.decomposeOpcode(this.memory[this.instructionPointer]);
+      let { opcode, mode1, mode2, mode3 } = this.decomposeOpcode(this.memory[this.pointer]);
       // console.log({ opcode, mode1, mode2, mode3 });
       if (opcode === 1) {
         // add
-        let param1 = mode1 ? this.memory[this.instructionPointer + 1] : this.memory[this.memory[this.instructionPointer + 1]];
-        let param2 = mode2 ? this.memory[this.instructionPointer + 2] : this.memory[this.memory[this.instructionPointer + 2]];
-        let param3 = this.memory[this.instructionPointer + 3]
+        let param1 = mode1 ? this.memory[this.pointer + 1] : this.memory[this.memory[this.pointer + 1]];
+        let param2 = mode2 ? this.memory[this.pointer + 2] : this.memory[this.memory[this.pointer + 2]];
+        let param3 = this.memory[this.pointer + 3]
         this.memory[param3] = param1 + param2;
-        this.instructionPointer += 4;
+        this.pointer += 4;
       }
       else if (opcode === 2) {
         // multiply
-        let param1 = mode1 ? this.memory[this.instructionPointer + 1] : this.memory[this.memory[this.instructionPointer + 1]];
-        let param2 = mode2 ? this.memory[this.instructionPointer + 2] : this.memory[this.memory[this.instructionPointer + 2]];
-        let param3 = this.memory[this.instructionPointer + 3]
+        let param1 = mode1 ? this.memory[this.pointer + 1] : this.memory[this.memory[this.pointer + 1]];
+        let param2 = mode2 ? this.memory[this.pointer + 2] : this.memory[this.memory[this.pointer + 2]];
+        let param3 = this.memory[this.pointer + 3]
         this.memory[param3] = param1 * param2;
-        this.instructionPointer += 4;
+        this.pointer += 4;
       }
       else if (opcode === 3) {
         // input
         if (inputUsed) {
           // console.log('input already used!');
-          this.isAwaitingInput = true;
+          // this.isAwaitingInput = true;
           running = false;
           break;
         } else {
           inputUsed = true;
+          // this.isAwaitingInput = false;
         }
-        let address1 = this.memory[this.instructionPointer + 1];
+        let address1 = this.memory[this.pointer + 1];
         this.memory[address1] = input;
-        this.instructionPointer += 2;
+        this.pointer += 2;
       }
       else if (opcode === 4) {
         // output
-        let param1 = mode1 ? this.memory[this.instructionPointer + 1] : this.memory[this.memory[this.instructionPointer + 1]];
+        let param1 = mode1 ? this.memory[this.pointer + 1] : this.memory[this.memory[this.pointer + 1]];
         output = param1;
-        //if (mode1) console.log('we have output in mode1, sneaky', { opcode, mode1, address1 });
-        this.instructionPointer += 2;
+        this.pointer += 2;
         // console.log(`output ${output}`);
         return output;
       }
       else if (opcode === 5) {
         // jump-if-true
-        let param1 = mode1 ? this.memory[this.instructionPointer + 1] : this.memory[this.memory[this.instructionPointer + 1]];
-        let param2 = mode2 ? this.memory[this.instructionPointer + 2] : this.memory[this.memory[this.instructionPointer + 2]];
-        if (param1 !== 0) {
-          this.instructionPointer = param2;
-        } else {
-          this.instructionPointer += 3;
-        }
+        let param1 = mode1 ? this.memory[this.pointer + 1] : this.memory[this.memory[this.pointer + 1]];
+        let param2 = mode2 ? this.memory[this.pointer + 2] : this.memory[this.memory[this.pointer + 2]];
+        this.pointer = param1 !== 0 ? param2 : this.pointer + 3;
       }
       else if (opcode === 6) {
         // jump-if-false
-        let param1 = mode1 ? this.memory[this.instructionPointer + 1] : this.memory[this.memory[this.instructionPointer + 1]];
-        let param2 = mode2 ? this.memory[this.instructionPointer + 2] : this.memory[this.memory[this.instructionPointer + 2]];
-        if (param1 === 0) {
-          this.instructionPointer = param2;
-        } else {
-          this.instructionPointer += 3;
-        }
+        let param1 = mode1 ? this.memory[this.pointer + 1] : this.memory[this.memory[this.pointer + 1]];
+        let param2 = mode2 ? this.memory[this.pointer + 2] : this.memory[this.memory[this.pointer + 2]];
+        this.pointer = param1 === 0 ? param2 : this.pointer + 3;
       }
       else if (opcode === 7) {
         // less-than
-        let param1 = mode1 ? this.memory[this.instructionPointer + 1] : this.memory[this.memory[this.instructionPointer + 1]];
-        let param2 = mode2 ? this.memory[this.instructionPointer + 2] : this.memory[this.memory[this.instructionPointer + 2]];
-        let param3 = this.memory[this.instructionPointer + 3];
+        let param1 = mode1 ? this.memory[this.pointer + 1] : this.memory[this.memory[this.pointer + 1]];
+        let param2 = mode2 ? this.memory[this.pointer + 2] : this.memory[this.memory[this.pointer + 2]];
+        let param3 = this.memory[this.pointer + 3];
         this.memory[param3] = param1 < param2 ? 1 : 0;
-        this.instructionPointer += 4;
+        this.pointer += 4;
       }
       else if (opcode === 8) {
         // equals
-        let param1 = mode1 ? this.memory[this.instructionPointer + 1] : this.memory[this.memory[this.instructionPointer + 1]];
-        let param2 = mode2 ? this.memory[this.instructionPointer + 2] : this.memory[this.memory[this.instructionPointer + 2]];
-        let param3 = this.memory[this.instructionPointer + 3];
+        let param1 = mode1 ? this.memory[this.pointer + 1] : this.memory[this.memory[this.pointer + 1]];
+        let param2 = mode2 ? this.memory[this.pointer + 2] : this.memory[this.memory[this.pointer + 2]];
+        let param3 = this.memory[this.pointer + 3];
         this.memory[param3] = param1 === param2 ? 1 : 0;
-        this.instructionPointer += 4;
+        this.pointer += 4;
       }
       else if (opcode === 99) {
         // halt
         // console.log('halted.');
         running = false;
-        this.instructionPointer += 1;
+        this.pointer += 1;
         this.isHalted = true;
         return null;
       }
       else {
-        console.error('Unknown opcode; something went wrong.', { instructionPointer: this.instructionPointer, opcode });
-        throw `Unknown opcode ${opcode} at instruction pointer ${this.instructionPointer}`;
+        console.error('Unknown opcode; something went wrong.', { instructionPointer: this.pointer, opcode });
+        throw `Unknown opcode ${opcode} at instruction pointer ${this.pointer}`;
       }
     } while (running);
-    // spit out memory after halting
-    return null;
-
   }
   decomposeOpcode(opcode) {
     opcode = opcode.toString();
@@ -132,9 +121,7 @@ class Amplifier {
 }
 
 let intcodes = fs.readFileSync('07input.txt', 'utf8').split(',').map(i => parseInt(i));
-
 let possiblePhaseSettings = getPermutations('56789');
-
 let maxValue = 0;
 let maxPhaseSettings;
 
@@ -175,25 +162,27 @@ for (let phase of possiblePhaseSettings) {
 console.log({ maxValue, maxPhaseSettings });
 
 // https://medium.com/@lindagmorales94/how-to-solve-a-string-permutation-problem-using-javascript-95ad5c388219
-function getPermutations(str) {
-  let letters = str.split(''),
-      results = [[letters.shift()]];
-  while (letters.length) {
-    const currLetter = letters.shift();
-    let tmpResults = [];
-    results.forEach(result => {
-      let rIdx = 0;
-      while (rIdx <= result.length) {
-        const tmp = [...result];
-        tmp.splice(rIdx, 0, currLetter);
-        tmpResults.push(tmp);
-        rIdx++;
+function getPermutations(string) {
+  let characters = string.split(''),
+      // shift() removes arr[0] and returns it
+      results = [[characters.shift()]];
+  while (characters.length > 0) {
+    const character = characters.shift();
+    let tempResults = [];
+    for (let array of results) {
+      let index = 0;
+      while (index <= array.length) {
+        const temp = [...array];
+        // insert character at temp[index]?
+        temp.splice(index, 0, character);
+        tempResults.push(temp);
+        index++;
       }
-    })
-    results = tmpResults;
+    }
+    results = tempResults;
   }
   return results
     .map(letterArray => letterArray.join(''))
-    .filter((el, idx, self) => (self.indexOf(el) === idx))
+    .filter((element, index, self) => (self.indexOf(element) === index))
     .sort();
 }
