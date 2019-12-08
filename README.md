@@ -40,3 +40,9 @@ Once again, I've decided to semi-seriously take part in this year's [Advent of C
 - part 2 was much more difficult, because we need to keep track of memory & instruction pointer and crucially, leave the 'amplifier' waiting for next input
 - decided I wanted to try a more object-oriented approach to defining an `Amplifier` with it's internal data & methods, end result currently looks a bit like [FizzBuzz Enterprise Edition](https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition)
 - TODO rewrite/grok permutation method
+  - spread syntax https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+
+## Day 8: [Space Image Format](https://adventofcode.com/2019/day/8)
+
+- playing with [characters](https://www.utf8-chartable.de/unicode-utf8-table.pl?start=9600&number=128), but not much learned otherwise?
+- TODO parsing integers in current solution, but we might go back to string form, as we don't really need integers right?
