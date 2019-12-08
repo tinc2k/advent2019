@@ -26,26 +26,22 @@ for (let index = 0; index < image.length; index+= BLOCK_SIZE) {
     twos: 0,
   };
   for (let i = index; i < index + BLOCK_SIZE; i++) {
-    block.digits.push(image[i]);
-    if (image[i] === '0') block.zeros++;
-    if (image[i] === '1') block.ones++;
-    if (image[i] === '2') block.twos++;
+    let parsed = parseInt(image[i]);
+    block.digits.push(parsed);
+    if (image[i] === 0) block.zeros++;
+    if (image[i] === 1) block.ones++;
+    if (image[i] === 2) block.twos++;
     // console.log(i);
   }
   // console.log("\n");
   blocks.push(block);
 }
 
-
 // digits indicate color of pixel: 0 black 1 white 2 transparent
 // layers are rendered with the first layer in front and the last layer in back
 
-for (let block of blocks) {
-  // console.log(block);
-}
-
 let final = new Array(BLOCK_SIZE);
-final.fill('2');
+final.fill(2);
 
 for (let i = 0; i < blocks.length; i++) {
   let currentBlock = blocks[i]
@@ -53,13 +49,10 @@ for (let i = 0; i < blocks.length; i++) {
 
     let color = currentBlock.digits[j];
     
-    if (color === '1' && final[j] === '2') {
+    if (color === 1 && final[j] === 2) {
       final[j] = 1;
     }
-    else if (color === '0' && final[j] === '2') {
-      final[j] = 0;
-    }
-    else if (color === '0' && final[j] === '1') {
+    else if (color === 0 && final[j] === 2) {
       final[j] = 0;
     }
   }
@@ -72,13 +65,12 @@ for (let row = 0; row < HEIGHT; row++) {
     let offset = row * WIDTH + column;
     let char = ' ';
     if (final[offset] === 1) {
-      char = '█';
+      char = 'O';
     }
     else if (final[offset] === 0) {
       char = ' ';
     }
-    printyRow += char; //final[offset];
-    printyRow += final[offset];
+    printyRow += char;
   }
   console.log(printyRow)
 }
